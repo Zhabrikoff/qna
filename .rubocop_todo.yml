@@ -52,6 +52,7 @@ Metrics/PerceivedComplexity:
 # Offense count: 5
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
+  Enabled: false
   Exclude:
     - 'spec/**/*'
     - 'test/**/*'
@@ -89,6 +90,7 @@ Style/StringLiterals:
   Exclude:
     - 'Gemfile'
     - 'app/controllers/application_controller.rb'
+    - 'db/schema.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
@@ -96,3 +98,7 @@ Style/StringLiterals:
 # URISchemes: http, https
 Layout/LineLength:
   Max: 198
+
+Style/NumericLiterals:
+  Exclude:
+    - 'db/schema.rb'
