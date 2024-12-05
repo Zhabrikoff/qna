@@ -1,39 +1,25 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
-  before_action :find_answer, only: %i[show edit update destroy]
-  before_action :find_question, only: %i[create update destroy]
-
-  def show; end
-
-  def new
-    @answer = Answer.new
-  end
-
-  def edit; end
+  before_action :authenticate_user!
+  before_action :find_question, only: %i[create destroy]
+  before_action :find_answer, only: %i[destroy]
 
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
 
     if @answer.save
-      redirect_to question_answer_path(@question, @answer)
+      redirect_to question_path(@question)
     else
-      render :new
-    end
-  end
-
-  def update
-    if @answer.update(answer_params)
-      redirect_to question_answer_path(@question, @answer)
-    else
-      render :edit
+      render 'questions/show'
     end
   end
 
   def destroy
     @answer.destroy
 
-    redirect_to question_answers_path(@question)
+    redirect_to question_path(@question)
   end
 
   private

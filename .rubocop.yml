@@ -6,3 +6,6 @@ AllCops:
 
 Metrics/BlockLength:
   AllowedMethods: ['describe', 'context']
+  Exclude:
+    - 'config/environments/*'
+    - 'db/schema.rb'
