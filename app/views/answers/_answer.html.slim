@@ -1,0 +1,4 @@
+p = answer.body
+
+- if user_signed_in? && current_user.author?(answer)
+  = link_to 'Delete answer', question_answer_path(@question, answer), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }
