@@ -5,12 +5,12 @@ require 'rails_helper'
 feature 'User can create answer', "
   In order to answer the question
   As an authenticated user
-  I'd like to be able to create answer for specific question
+  I'd like to be able to create an answer for a specific question
 " do
   given(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     background do
       sign_in(user)
 
@@ -22,7 +22,11 @@ feature 'User can create answer', "
 
       click_on 'Answer'
 
-      expect(page).to have_content 'Test answer'
+      expect(current_path).to eq question_path(question)
+
+      within '.answers' do
+        expect(page).to have_content 'Test answer'
+      end
     end
 
     scenario 'creates an answer with errors' do
