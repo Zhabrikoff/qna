@@ -1,4 +1,17 @@
-p = answer.body
+- if answer.persisted?
+  div id="answer-id-#{answer.id}"
+    p = 'Best' if answer.best
+    p = answer.body
 
-- if user_signed_in? && current_user.author?(answer)
-  = link_to 'Delete answer', question_answer_path(@question, answer), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }
+    - if user_signed_in? && current_user.author?(answer)
+      = link_to 'Mark as best', mark_as_best_answer_path(answer), method: :patch, remote: true unless answer.best
+      = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      = link_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true 
+
+      .answer-errors
+
+      = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+        = f.label :body, 'Your answer'
+        = f.text_area :body
+
+        = f.submit 'Save'

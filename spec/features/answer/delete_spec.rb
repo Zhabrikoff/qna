@@ -12,12 +12,14 @@ feature 'User can create answer', "
   given(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question, user: author) }
 
-  scenario 'Author deletes his answer' do
+  scenario 'Author deletes his answer', js: true do
     sign_in(author)
 
     visit question_path(question)
 
-    click_on 'Delete answer'
+    accept_alert do
+      click_on 'Delete answer'
+    end
 
     expect(page).to_not have_content answer.body
   end
