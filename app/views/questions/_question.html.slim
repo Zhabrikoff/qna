@@ -1,5 +1,13 @@
-h1= @question.title
-p= @question.body
+h1 = @question.title
+p = @question.body
+
+.question-files
+  - if @question.files.attached?
+    - @question.files.each do |file|
+      p id="file-id-#{file.id}"
+        = link_to file.filename.to_s, url_for(file)
+        - if user_signed_in? && current_user.author?(@question)
+          = link_to 'Delete', delete_file_question_path(@question, file_id: file.id), method: :delete, remote: true
 
 - if user_signed_in? && current_user.author?(@question)
   = link_to 'Edit', '#', class: 'edit-question-link'
@@ -12,5 +20,8 @@ p= @question.body
 
     = f.label :body
     = f.text_area :body
+
+    = f.label :file
+    = f.file_field :files, multiple: true, direct_upload: true
 
     = f.submit 'Save'
