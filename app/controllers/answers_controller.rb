@@ -3,7 +3,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_question, only: %i[create]
-  before_action :find_answer, only: %i[destroy update mark_as_best]
+  before_action :find_answer, only: %i[destroy update mark_as_best delete_file]
   before_action :find_question_from_answer, only: %i[update mark_as_best]
 
   def create
@@ -24,10 +24,15 @@ class AnswersController < ApplicationController
     @answer.mark_as_best
   end
 
+  def delete_file
+    file = @answer.files.find(params[:file_id])
+    file.purge
+  end
+
   private
 
   def find_answer
-    @answer = Answer.find(params[:id])
+    @answer = Answer.with_attached_files.find(params[:id])
   end
 
   def find_question
@@ -39,6 +44,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, files: [])
   end
 end

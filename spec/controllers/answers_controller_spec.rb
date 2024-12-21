@@ -125,4 +125,24 @@ RSpec.describe AnswersController, type: :controller do
       expect(answer).to_not be_best
     end
   end
+
+  describe 'DELETE #delete_file' do
+    before do
+      login(user)
+    end
+
+    let!(:question) { create(:question) }
+    let!(:answer) { create(:answer, :with_file, question: question) }
+    let!(:file) { answer.files.first }
+
+    it 'deletes the file' do
+      expect { delete :delete_file, params: { id: answer, file_id: file.id }, format: :js }.to change(answer.files, :count).by(-1)
+    end
+
+    it 'renders delete_file template' do
+      delete :delete_file, params: { id: answer, file_id: file.id }, format: :js
+
+      expect(response).to render_template :delete_file
+    end
+  end
 end
