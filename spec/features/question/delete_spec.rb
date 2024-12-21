@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'User can create question', "
+feature 'User can delete question', "
   In order to remove question
   As an author of question
   I'd like to be able to delete my question

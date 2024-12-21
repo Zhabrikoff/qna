@@ -10,3 +10,11 @@ Metrics/BlockLength:
     - 'config/environments/*'
     - 'db/schema.rb'
     - 'spec/**/*'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'db/migrate/*'
