@@ -162,23 +162,4 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to questions_path
     end
   end
-
-  describe 'DELETE #delete_file' do
-    before do
-      login(user)
-    end
-
-    let!(:question) { create(:question, :with_file) }
-    let!(:file) { question.files.first }
-
-    it 'deletes the file' do
-      expect { delete :delete_file, params: { id: question, file_id: file.id }, format: :js }.to change(question.files, :count).by(-1)
-    end
-
-    it 'renders delete_file template' do
-      delete :delete_file, params: { id: question, file_id: file.id }, format: :js
-
-      expect(response).to render_template :delete_file
-    end
-  end
 end

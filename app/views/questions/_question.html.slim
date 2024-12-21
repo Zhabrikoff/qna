@@ -4,10 +4,7 @@ p = @question.body
 .question-files
   - if @question.files.attached?
     - @question.files.each do |file|
-      p id="file-id-#{file.id}"
-        = link_to file.filename.to_s, url_for(file)
-        - if user_signed_in? && current_user.author?(@question)
-          = link_to 'Delete', delete_file_question_path(@question, file_id: file.id), method: :delete, remote: true
+      = render 'attachments/attachment', source: question, file: file
 
 - if user_signed_in? && current_user.author?(@question)
   = link_to 'Edit', '#', class: 'edit-question-link'
