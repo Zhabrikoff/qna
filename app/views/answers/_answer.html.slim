@@ -6,11 +6,7 @@
     .answer-files
       - if answer.files.attached?
         - answer.files.each do |file|
-          p id="file-id-#{file.id}"
-            = link_to file.filename.to_s, url_for(file)
-            - if user_signed_in? && current_user.author?(answer)
-              = link_to 'Delete', delete_file_answer_path(answer, file_id: file.id), method: :delete, remote: true
-
+          = render 'attachments/attachment', source: answer, file: file
 
     - if user_signed_in? && current_user.author?(answer)
       = link_to 'Mark as best', mark_as_best_answer_path(answer), method: :patch, remote: true unless answer.best

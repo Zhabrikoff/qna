@@ -1,0 +1,4 @@
+p id="file-id-#{file.id}"
+  = link_to link_to file.filename.to_s, url_for(file), target: '_blank'
+  - if user_signed_in? && current_user.author?(source)
+    = link_to 'Delete', attachment_path(file.id), method: :delete, remote: true
