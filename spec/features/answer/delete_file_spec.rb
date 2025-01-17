@@ -12,18 +12,16 @@ feature 'User can delete files in his answer', "
   given(:question) { create(:question) }
   given!(:answer) { create(:answer, :with_file, question: question, user: author) }
 
-  scenario 'Author deletes files in his answer' do
+  scenario 'Author deletes files in his answer', js: true do
     sign_in(author)
 
     visit question_path(question)
 
     within '.answer-files' do
-      accept_alert do
-        click_on 'Delete'
-      end
+      click_on 'Delete'
     end
 
-    expect(page).to_not have_link question.files.first.blob.filename
+    expect(page).to_not have_link answer.files.first.blob.filename
   end
 
   scenario 'Non-author tries to delete files' do
