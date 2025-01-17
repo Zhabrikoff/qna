@@ -1,0 +1,10 @@
+p = "Email: #{current_user.email}"
+
+- if current_user.awards.present?
+  p Awards:
+  - current_user.awards.each do |award|
+    p Question: #{award.question.title}
+    div
+      - if award.image.attached?
+        = image_tag award.image, style: 'max-width: 40px;'
+      = award.name
