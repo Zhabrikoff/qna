@@ -5,6 +5,7 @@
 
 //= require jquery3
 
+require("@nathanvda/cocoon")
 require('../utilities/answers')
 require('../utilities/questions')
 

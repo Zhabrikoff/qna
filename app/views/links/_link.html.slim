@@ -1,0 +1,8 @@
+li id="link-id-#{link.id}"
+  = link_to link.name, link.url
+  - if link.gist_url?
+    - GistService.new(link.url).call.each do |content|
+      p = content
+  - if user_signed_in? && current_user.author?(source)
+    = link_to 'delete', link_path(link), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+

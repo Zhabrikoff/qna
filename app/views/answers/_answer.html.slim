@@ -7,6 +7,13 @@
       - if answer.files.attached?
         - answer.files.each do |file|
           = render 'attachments/attachment', source: answer, file: file
+    
+    .answer-links
+      - if answer.links.exists?
+        p Links:
+        ul
+          - answer.links.each do |link|
+            = render 'links/link', source: answer, link: link
 
     - if user_signed_in? && current_user.author?(answer)
       = link_to 'Mark as best', mark_as_best_answer_path(answer), method: :patch, remote: true unless answer.best
