@@ -125,4 +125,13 @@ RSpec.describe AnswersController, type: :controller do
       expect(answer).to_not be_best
     end
   end
+
+  describe 'Voted' do
+    before { logout(user) }
+
+    it_behaves_like 'voted' do
+      let(:author) { create(:user) }
+      let(:votable) { create(:answer, question: question, user: author) }
+    end
+  end
 end
