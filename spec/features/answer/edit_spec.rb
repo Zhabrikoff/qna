@@ -28,7 +28,7 @@ feature 'User can edit his answer', "
       click_on 'Edit'
 
       within '.answers' do
-        fill_in 'Body',	with: 'Edited answer'
+        fill_in 'Your answer',	with: 'Edited answer'
 
         click_on 'Save'
 

@@ -16,9 +16,11 @@ feature 'User can add links to answer', "
 
     visit question_path(question)
 
-    fill_in 'Body', with: 'Test answer'
-    fill_in 'Link name', with: 'My link'
-    fill_in 'Url', with: link
+    within '.new-answer' do
+      fill_in 'Body', with: 'Test answer'
+      fill_in 'Link name', with: 'My link'
+      fill_in 'Url', with: link
+    end
 
     click_on 'Answer'
 

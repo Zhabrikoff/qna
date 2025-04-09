@@ -1,0 +1,6 @@
+<% if @question.errors.any? %>
+  $('.new-question-errors').html('<%= j render "shared/errors", resource: @question %>');
+<% else %>
+  $('.questions').append('<%= j render @question %>');
+  $('.new-question-form')[0].reset();
+<% end %> 

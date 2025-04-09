@@ -23,6 +23,19 @@
           - answer.links.each do |link|
             = render 'links/link', source: answer, link: link
 
+    .comments
+      p Comments:
+      - if answer.comments.exists?
+        ul
+          - answer.comments.each do |comment|
+            = render 'comments/comment', comment: comment
+
+      - if user_signed_in?
+        h3 New comment
+        .new-comment-errors
+          = render 'shared/errors', resource: @comment
+        = render 'comments/form', resource: answer
+
     - if user_signed_in? && current_user.author?(answer)
       = link_to 'Mark as best', mark_as_best_answer_path(answer), method: :patch, remote: true unless answer.best
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
