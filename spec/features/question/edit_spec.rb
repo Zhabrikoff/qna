@@ -27,8 +27,10 @@ feature 'User can edit his question', "
       click_on 'Edit'
 
       within '.question' do
-        fill_in 'Title', with: 'Question Title'
-        fill_in 'Body', with: 'Question body'
+        within '.edit-question' do
+          fill_in 'Title', with: 'Question Title'
+          fill_in 'Body', with: 'Question body'
+        end
 
         click_on 'Save'
 
@@ -42,8 +44,10 @@ feature 'User can edit his question', "
       click_on 'Edit'
 
       within '.question' do
-        fill_in 'Title', with: ''
-        fill_in 'Body', with: ''
+        within '.edit-question' do
+          fill_in 'Title', with: ''
+          fill_in 'Body', with: ''
+        end
 
         click_on 'Save'
 

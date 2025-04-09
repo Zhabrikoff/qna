@@ -1,0 +1,5 @@
+= form_with model: [resource, @comment], class: 'new-comment', local: false do |f|
+  = f.label :body
+  = f.text_field :body
+
+  = f.submit 'Comment'
