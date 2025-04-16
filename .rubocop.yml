@@ -3,12 +3,13 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   NewCops: enable
   SuggestExtensions: false
+  Exclude:
+    - 'db/schema.rb'
 
 Metrics/BlockLength:
   AllowedMethods: ['describe', 'context']
   Exclude:
     - 'config/environments/*'
-    - 'db/schema.rb'
     - 'spec/**/*'
 
 Metrics/MethodLength:

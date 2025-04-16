@@ -37,6 +37,10 @@ gem "hotwire-rails", "~> 0.1.3"
 gem "importmap-rails", "~> 2.0"
 gem 'jquery-rails'
 gem "octokit"
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 gem 'slim-rails'
 
 group :development, :test do
