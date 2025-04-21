@@ -6,7 +6,7 @@ feature 'User can vote for a answer' do
   given!(:user) { create(:user) }
   given!(:author) { create(:user) }
   given!(:question) { create(:question, user: author) }
-  given!(:answer) { create(:answer, question:, user: author) }
+  given!(:answer) { create(:answer, question: question, user: author) }
 
   describe 'Authenticated user' do
     describe 'Author', :js do

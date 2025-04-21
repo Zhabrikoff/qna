@@ -10,6 +10,8 @@ class AnswersController < ApplicationController
   before_action :find_new_comment
   after_action :publish_answer, only: %i[create]
 
+  authorize_resource
+
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user

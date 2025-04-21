@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe LinksController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question, :with_link) }
+  let(:question) { create(:question, :with_link, user: user) }
   let!(:link) { question.links.first }
 
   describe 'DELETE #destroy' do
