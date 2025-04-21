@@ -7,23 +7,27 @@ class FindForOauthService
     @auth = auth
   end
 
-  # rubocop:disable Metrics/AbcSize
   def call
-    authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
+    return existing_user if existing_user
 
-    return authorization.user if authorization
-
-    email = auth.info[:email]
-
-    user = User.where(email: email).first
-
-    unless user
-      password = Devise.friendly_token[0, 20]
-      user = User.create!(email: email, password: password, password_confirmation: password)
-    end
+    user = find_or_create_user
     user.create_authorization(auth)
-
     user
   end
-  # rubocop:enable Metrics/AbcSize
+
+  private
+
+  def existing_user
+    authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
+
+    authorization&.user
+  end
+
+  def find_or_create_user
+    User.find_or_create_by(email: auth.info[:email]) do |u|
+      password = Devise.friendly_token[0, 20]
+      u.password = password
+      u.password_confirmation = password
+    end
+  end
 end
