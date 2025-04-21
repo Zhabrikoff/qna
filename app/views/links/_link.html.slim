@@ -3,6 +3,6 @@ li id="link-id-#{link.id}"
   - if link.gist_url?
     - GistService.new(link.url).call.each do |content|
       p = content
-  - if user_signed_in? && current_user.author?(source)
+  - if can? :destroy, link
     = link_to 'delete', link_path(link), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 

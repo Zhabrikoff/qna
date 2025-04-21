@@ -1,4 +1,3 @@
-
 .vote class="vote-#{resource.class}-#{resource.id}"
   .vote-errors
 
@@ -6,15 +5,15 @@
   .total-votes
     = resource.rating
 
-  - if user_signed_in?
-    - unless current_user&.author?(resource)
-      .voting
-        = link_to '+', polymorphic_path(resource, action: :vote_up),
-                method: :post,
-                remote: true,
-                data: { type: :json }
+  .voting
+    - if can? :vote_up, resource
+      = link_to '+', polymorphic_path(resource, action: :vote_up),
+              method: :post,
+              remote: true,
+              data: { type: :json }
 
-        = link_to '-', polymorphic_path(resource, action: :vote_down),
-                method: :post,
-                remote: true,
-                data: { type: :json }
+    - if can? :vote_down, resource
+      = link_to '-', polymorphic_path(resource, action: :vote_down),
+              method: :post,
+              remote: true,
+              data: { type: :json }

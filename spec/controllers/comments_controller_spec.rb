@@ -38,7 +38,7 @@ RSpec.describe CommentsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:comment) { create(:comment, commentable: question) }
+    let!(:comment) { create(:comment, commentable: question, user: user) }
 
     it 'deletes the comment' do
       expect { delete :destroy, params: { id: comment }, format: :js }.to change(Comment, :count).by(-1)

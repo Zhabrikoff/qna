@@ -4,9 +4,10 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question) }
+  let(:author) { create(:user) }
+  let(:question) { create(:question, user: author) }
   let(:answer) { create(:answer, question: question) }
-  let(:another_answer) { create(:answer, question:) }
+  let(:another_answer) { create(:answer, question: question, user: user) }
 
   describe 'POST #create' do
     before do
@@ -44,7 +45,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     let!(:question) { create(:question) }
-    let!(:answer) { create(:answer, question: question) }
+    let!(:answer) { create(:answer, question: question, user: user) }
 
     it 'deletes the answer' do
       expect { delete :destroy, params: { question_id: question, id: answer }, format: :js }.to change(Answer, :count).by(-1)
@@ -62,7 +63,7 @@ RSpec.describe AnswersController, type: :controller do
       login(user)
     end
 
-    let!(:answer) { create(:answer, question: question) }
+    let!(:answer) { create(:answer, question: question, user: user) }
 
     context 'with valid attributes' do
       it 'changes answer attributes' do
@@ -97,7 +98,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #mark_as_best' do
     before do
-      login(user)
+      login(author)
     end
 
     it 'marks the answer as the best' do

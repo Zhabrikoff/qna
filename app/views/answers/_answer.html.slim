@@ -36,18 +36,22 @@
           = render 'shared/errors', resource: @comment
         = render 'comments/form', resource: answer
 
-    - if user_signed_in? && current_user.author?(answer)
+    - if can? :mark_as_best, answer
       = link_to 'Mark as best', mark_as_best_answer_path(answer), method: :patch, remote: true unless answer.best
+
+    - if can? :update, answer
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+
+    - if can? :destroy, answer
       = link_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
-      .answer-errors
+    .answer-errors
 
-      = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-        = f.label :body, 'Your answer'
-        = f.text_area :body
+    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+      = f.label :body, 'Your answer'
+      = f.text_area :body
 
-        = f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true
+      = f.label :files
+      = f.file_field :files, multiple: true, direct_upload: true
 
-        = f.submit 'Save'
+      = f.submit 'Save'

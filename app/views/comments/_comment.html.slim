@@ -2,7 +2,7 @@
   li id="comment-id-#{comment.id}"
     p = comment.body
 
-    - if user_signed_in? && current_user.author?(comment)
+    - if can? :update, comment
       = link_to 'edit', '#', class: 'edit-comment-link', data: { comment_id: comment.id }
       = link_to 'delete', comment_path(comment), class: 'delete-comment-link', method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 

@@ -3,6 +3,8 @@
 class AttachmentsController < ApplicationController
   before_action :find_attachment, only: :destroy
 
+  authorize_resource
+
   def destroy
     @attachment.purge
   end
