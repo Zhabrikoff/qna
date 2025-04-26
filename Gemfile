@@ -33,6 +33,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'cancancan'
 gem "cocoon"
 gem 'devise'
+gem 'doorkeeper'
 gem 'gon'
 gem "hotwire-rails", "~> 0.1.3"
 gem "importmap-rails", "~> 2.0"
