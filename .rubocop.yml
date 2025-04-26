@@ -11,11 +11,16 @@ Metrics/BlockLength:
   Exclude:
     - 'config/environments/*'
     - 'spec/**/*'
+    - 'config/routes.rb'
 
 Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*'
 
 Metrics/AbcSize:
+  Exclude:
+    - 'db/migrate/*'
+
+Style/StringLiterals:
   Exclude:
     - 'db/migrate/*'
