@@ -39,6 +39,7 @@ RSpec.configure do |config|
   config.include FeatureHelpers, type: :feature
   config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include VoteHelpers, type: :model
+  config.include ApiHelpers, type: :request
 
   Capybara.javascript_driver = :selenium_chrome
 
