@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'active_model_serializers', '~> 0.10'
 gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'cancancan'
@@ -39,6 +40,7 @@ gem 'hotwire-rails', '~> 0.1.3'
 gem 'importmap-rails', '~> 2.0'
 gem 'jquery-rails'
 gem 'octokit'
+gem 'oj'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
