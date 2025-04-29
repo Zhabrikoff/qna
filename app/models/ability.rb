@@ -26,6 +26,7 @@ class Ability
     content_management_abilities
     voting_abilities
     attachment_abilities
+    subscription_abilities
   end
 
   def content_creation_abilities
@@ -54,6 +55,12 @@ class Ability
     can :destroy, ActiveStorage::Attachment do |attachment|
       user_owns_attachment?(attachment)
     end
+  end
+
+  def subscription_abilities
+    can :subscribe, Question
+    can :create, Subscription
+    can :destroy, Subscription, user_id: user.id
   end
 
   def admin_abilities

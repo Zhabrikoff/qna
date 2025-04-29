@@ -6,6 +6,7 @@ class Question < ApplicationRecord
 
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
+  has_many :subscriptions, dependent: :destroy
   has_one :award, dependent: :destroy
 
   belongs_to :user
@@ -17,6 +18,8 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
+  after_create :subscribe_author
+
   def best_answer
     answers.best.first
   end
@@ -25,5 +28,11 @@ class Question < ApplicationRecord
     return unless award.present?
 
     user.awards.push(award)
+  end
+
+  private
+
+  def subscribe_author
+    subscriptions.create!(user: user)
   end
 end

@@ -28,13 +28,16 @@ RSpec.describe Ability do
     let(:link) { create(:link, linkable: question) }
     let(:other_link) { create(:link, linkable: other_question) }
 
+    let(:subscription) { create(:subscription, user: user, question: question) }
+    let(:other_subscription) { create(:subscription, user: other_user, question: other_question) }
+
     it { should be_able_to :read, :all }
     it { should_not be_able_to :manage, :all }
 
     it { should be_able_to :create, Question }
     it { should be_able_to :create, Answer }
     it { should be_able_to :create, Comment }
-
+    it { should be_able_to :create, Subscription }
     it { should be_able_to :update, question }
     it { should_not be_able_to :update, other_question }
     it { should be_able_to :update, answer }
@@ -67,6 +70,9 @@ RSpec.describe Ability do
 
     it { should be_able_to :destroy, question.files.first }
     it { should_not be_able_to :destroy, other_question.files.first }
+
+    it { should be_able_to :destroy, subscription }
+    it { should_not be_able_to :destroy, other_subscription }
   end
 
   describe 'for admin' do

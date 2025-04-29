@@ -33,4 +33,20 @@ RSpec.describe User, type: :model do
       User.find_for_oauth(auth)
     end
   end
+
+  describe '#subscribed?' do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+
+    let(:subscription) { create(:subscription, user: user, question: question) }
+
+    it 'if user is subscribed to a question' do
+      expect(user.subscribed?(question)).to be_truthy
+    end
+
+    it 'if user is not subscribed to a question' do
+      expect(other_user.subscribed?(question)).to be_falsey
+    end
+  end
 end
