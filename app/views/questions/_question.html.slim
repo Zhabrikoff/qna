@@ -1,6 +1,11 @@
 div id="question-id-#{@question.id}"
   h1 = @question.title
+
+  - if can? :subscribe, @question
+    = render 'subscriptions/subscription_links', question: @question
+
   = render 'votes/vote', resource: @question
+
   p = @question.body
 
 .question-files
