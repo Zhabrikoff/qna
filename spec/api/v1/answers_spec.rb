@@ -132,6 +132,7 @@ describe 'Answers API', type: :request do
 
   describe 'PATCH /api/v1/answers/:id' do
     let!(:user) { create(:user) }
+    let!(:other_user) { create(:user) }
     let!(:question) { create(:question, user: user) }
     let!(:answer) { create(:answer, question: question, user: user) }
     let(:api_path) { "/api/v1/answers/#{answer.id}" }
@@ -140,7 +141,8 @@ describe 'Answers API', type: :request do
     it_behaves_like 'API Authorizable'
 
     context 'authorized' do
-      let(:access_token) { create(:access_token) }
+      let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+      let(:other_access_token) { create(:access_token, resource_owner_id: other_user.id) }
       let(:answer_response) { json['answer'] }
 
       context 'with valid attributes' do
@@ -162,11 +164,22 @@ describe 'Answers API', type: :request do
           expect(json['errors']).to eq ["Body can't be blank"]
         end
       end
+
+      context 'when trying to update other user answer' do
+        before do
+          patch(api_path, params: { access_token: other_access_token.token, answer: { body: 'Updated body' } })
+        end
+
+        it 'returns 404 status' do
+          expect(response.status).to eq 404
+        end
+      end
     end
   end
 
   describe 'DELETE /api/v1/answers/:id' do
     let!(:user) { create(:user) }
+    let!(:other_user) { create(:user) }
     let!(:question) { create(:question, user: user) }
     let!(:answer) { create(:answer, question: question, user: user) }
     let(:api_path) { "/api/v1/answers/#{answer.id}" }
@@ -175,11 +188,33 @@ describe 'Answers API', type: :request do
     it_behaves_like 'API Authorizable'
 
     context 'authorized' do
-      let(:access_token) { create(:access_token) }
+      let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+      let(:other_access_token) { create(:access_token, resource_owner_id: other_user.id) }
 
-      it 'deletes answer' do
-        expect { delete api_path, params: { access_token: access_token.token } }
-          .to change(Answer, :count).by(-1)
+      context 'when trying to delete own answer' do
+        it 'deletes answer' do
+          expect { delete api_path, params: { access_token: access_token.token } }
+            .to change(Answer, :count).by(-1)
+        end
+
+        it 'returns 200 status' do
+          delete api_path, params: { access_token: access_token.token }
+
+          expect(response).to be_successful
+        end
+      end
+
+      context 'when trying to delete other user answer' do
+        it 'does not delete answer' do
+          expect { delete api_path, params: { access_token: other_access_token.token } }
+            .to_not change(Answer, :count)
+        end
+
+        it 'returns 404 status' do
+          delete api_path, params: { access_token: other_access_token.token }
+
+          expect(response.status).to eq 404
+        end
       end
     end
   end

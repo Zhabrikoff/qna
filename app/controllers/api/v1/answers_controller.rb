@@ -3,7 +3,8 @@
 module Api
   module V1
     class AnswersController < Api::V1::BaseController
-      before_action :find_answer, only: %i[show update destroy]
+      before_action :find_answer, only: %i[show]
+      before_action :find_owned_answer, only: %i[update destroy]
       before_action :find_question, only: %i[index create]
 
       def index
@@ -43,6 +44,12 @@ module Api
 
       def find_answer
         @answer = Answer.find(params[:id])
+      end
+
+      def find_owned_answer
+        @answer = current_resource_owner.answers.find_by(id: params[:id])
+
+        render json: { error: 'Answer not found' }, status: :not_found unless @answer
       end
 
       def find_question
