@@ -33,12 +33,14 @@ gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'cancancan'
 gem 'cocoon'
+gem 'database_cleaner-active_record'
 gem 'devise'
 gem 'doorkeeper'
 gem 'gon'
 gem 'hotwire-rails', '~> 0.1.3'
 gem 'importmap-rails', '~> 2.0'
 gem 'jquery-rails'
+gem 'mysql2'
 gem 'octokit'
 gem 'oj'
 gem 'omniauth'
@@ -48,6 +50,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim-rails'
+gem 'thinking-sphinx'
 gem 'whenever', require: false
 
 group :development, :test do

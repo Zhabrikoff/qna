@@ -1,0 +1,28 @@
+h1 Search results
+
+- if @data.present?
+  .search-results
+    - @grouped_results.each do |resource_type, resources|
+      - case resource_type.name
+      - when 'Question'
+        h3 Questions
+        - resources.each do |resource|
+          div
+            = link_to resource.title, resource
+      - when 'Answer'
+        h3 Answers
+        - resources.each do |resource|
+          div
+            = link_to resource.body, resource.question
+      - when 'Comment'
+        h3 Comments
+        - resources.each do |resource|
+          div
+            = link_to resource.body, resource.commentable.is_a?(Question) ? resource.commentable : resource.commentable.question
+      - when 'User'
+        h3 Users
+        - resources.each do |resource|
+          div
+            p = resource.email
+- else
+  p No results found
