@@ -21,5 +21,21 @@ RSpec.describe SearchController, type: :controller do
         get :search, params: { query: 'test', model: 'Question' }
       end
     end
+
+    it 'assigns @data' do
+      ThinkingSphinx::Test.run do
+        get :search, params: { query: 'test', model: 'Question' }
+
+        expect(assigns(:data)).to be_a(ThinkingSphinx::Search)
+      end
+    end
+
+    it 'assigns @grouped_results' do
+      ThinkingSphinx::Test.run do
+        get :search, params: { query: 'test', model: 'Question' }
+
+        expect(assigns(:grouped_results)).to be_a(Hash)
+      end
+    end
   end
 end
