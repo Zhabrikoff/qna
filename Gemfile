@@ -30,12 +30,14 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'active_model_serializers', '~> 0.10'
 gem 'aws-sdk-s3', require: false
+gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'cancancan'
 gem 'cocoon'
 gem 'database_cleaner-active_record'
 gem 'devise'
 gem 'doorkeeper'
+gem 'ed25519', '>= 1.2', '< 2.0'
 gem 'gon'
 gem 'hotwire-rails', '~> 0.1.3'
 gem 'importmap-rails', '~> 2.0'
@@ -60,6 +62,12 @@ group :development, :test do
   gem  'factory_bot_rails'
   gem 'rspec-rails', '~> 6'
   gem 'rubocop'
+
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-passenger', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
 end
 
 group :development do
