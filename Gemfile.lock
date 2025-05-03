@@ -200,6 +200,8 @@ GEM
     launchy (3.0.1)
       addressable (~> 2.8)
       childprocess (~> 5.0)
+    libv8-node (23.6.1.0-arm64-darwin)
+    libv8-node (23.6.1.0-x86_64-linux)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -217,6 +219,8 @@ GEM
     method_source (1.1.0)
     middleware (0.1.0)
     mini_mime (1.1.5)
+    mini_racer (0.18.1)
+      libv8-node (~> 23.6.1.0)
     minitest (5.25.1)
     msgpack (1.7.5)
     multi_json (1.15.0)
@@ -515,6 +519,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   listen (~> 3.3)
+  mini_racer
   mysql2
   octokit
   oj
