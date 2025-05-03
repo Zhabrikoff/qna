@@ -14,7 +14,15 @@
 #   runner "MyModel.some_method"
 #   rake "some:great:rake:task"
 # end
-#
+
+env :PATH, ENV.fetch('PATH', nil)
+env :GEM_HOME, ENV.fetch('GEM_HOME', nil)
+env :GEM_PATH, ENV.fetch('GEM_PATH', nil)
+env :REDIS_URL, 'redis://localhost:6379/1'
+
+set :environment, 'production'
+set :output, 'log/cron.log'
+
 every 1.days do
   runner 'DailyDigestJob.perform_now'
 end
