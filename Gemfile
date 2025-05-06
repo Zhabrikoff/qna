@@ -55,6 +55,7 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim-rails'
 gem 'thinking-sphinx'
+gem 'unicorn'
 gem 'whenever', require: false
 
 group :development, :test do
@@ -66,6 +67,7 @@ group :development, :test do
   gem 'rubocop'
 
   gem 'capistrano', require: false
+  gem 'capistrano3-unicorn', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-passenger', require: false
   gem 'capistrano-rails', require: false

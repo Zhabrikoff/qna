@@ -20,3 +20,5 @@ append :linked_files, 'config/database.yml', 'config/master.key', 'config/sideki
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'vendor', 'storage'
 
 set :default_env, { 'NODE_OPTIONS' => '--openssl-legacy-provider' }
+
+after 'deploy:publishing', 'unicorn:restart'
