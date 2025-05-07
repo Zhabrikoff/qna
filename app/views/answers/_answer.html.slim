@@ -1,57 +1,58 @@
 - if answer.persisted?
-  div id="answer-id-#{answer.id}"
-    p = 'Best' if answer.best
-    - if answer.question.award.present? && answer.best
-      div
-        - if answer.question.award.image.attached?
-          = image_tag answer.question.award.image, style: 'max-width: 40px;'
-        = answer.question.award.name
+  - cache answer do
+    div id="answer-id-#{answer.id}"
+      p = 'Best' if answer.best
+      - if answer.question.award.present? && answer.best
+        div
+          - if answer.question.award.image.attached?
+            = image_tag answer.question.award.image, style: 'max-width: 40px;'
+          = answer.question.award.name
 
-    = render 'votes/vote', resource: answer
+      = render 'votes/vote', resource: answer
 
-    p = answer.body
+      p = answer.body
 
-    .answer-files
-      - if answer.files.attached?
-        - answer.files.each do |file|
-          = render 'attachments/attachment', source: answer, file: file
-    
-    .answer-links
-      - if answer.links.exists?
-        p Links:
-        ul
-          - answer.links.each do |link|
-            = render 'links/link', source: answer, link: link
+      .answer-files
+        - if answer.files.attached?
+          - answer.files.each do |file|
+            = render 'attachments/attachment', source: answer, file: file
+      
+      .answer-links
+        - if answer.links.exists?
+          p Links:
+          ul
+            - answer.links.each do |link|
+              = render 'links/link', source: answer, link: link
 
-    .comments
-      p Comments:
-      - if answer.comments.exists?
-        ul
-          - answer.comments.each do |comment|
-            = render 'comments/comment', comment: comment
+      .comments
+        p Comments:
+        - if answer.comments.exists?
+          ul
+            - answer.comments.each do |comment|
+              = render 'comments/comment', comment: comment
 
-      - if user_signed_in?
-        h3 New comment
-        .new-comment-errors
-          = render 'shared/errors', resource: @comment
-        = render 'comments/form', resource: answer
+        - if user_signed_in?
+          h3 New comment
+          .new-comment-errors
+            = render 'shared/errors', resource: @comment
+          = render 'comments/form', resource: answer
 
-    - if can? :mark_as_best, answer
-      = link_to 'Mark as best', mark_as_best_answer_path(answer), method: :patch, remote: true unless answer.best
+      - if can? :mark_as_best, answer
+        = link_to 'Mark as best', mark_as_best_answer_path(answer), method: :patch, remote: true unless answer.best
 
-    - if can? :update, answer
-      = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      - if can? :update, answer
+        = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
-    - if can? :destroy, answer
-      = link_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+      - if can? :destroy, answer
+        = link_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
-    .answer-errors
+      .answer-errors
 
-    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-      = f.label :body, 'Your answer'
-      = f.text_area :body
+      = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+        = f.label :body, 'Your answer'
+        = f.text_area :body
 
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
 
-      = f.submit 'Save'
+        = f.submit 'Save'
