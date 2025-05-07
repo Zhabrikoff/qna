@@ -1,15 +1,16 @@
 - if comment.persisted?
-  li id="comment-id-#{comment.id}"
-    p = comment.body
+  - cache comment do
+    li id="comment-id-#{comment.id}"
+      p = comment.body
 
-    - if can? :update, comment
-      = link_to 'edit', '#', class: 'edit-comment-link', data: { comment_id: comment.id }
-      = link_to 'delete', comment_path(comment), class: 'delete-comment-link', method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+      - if can? :update, comment
+        = link_to 'edit', '#', class: 'edit-comment-link', data: { comment_id: comment.id }
+        = link_to 'delete', comment_path(comment), class: 'delete-comment-link', method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
-      .comment-errors
+        .comment-errors
 
-      = form_with model: comment, class: 'hidden', html: { id: "edit-comment-#{comment.id}" }, local: false do |f|
-        = f.label :body, 'Your comment'
-        = f.text_field :body
+        = form_with model: comment, class: 'hidden', html: { id: "edit-comment-#{comment.id}" }, local: false do |f|
+          = f.label :body, 'Your comment'
+          = f.text_field :body
 
-        = f.submit 'Save'
+          = f.submit 'Save'

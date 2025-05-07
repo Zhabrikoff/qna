@@ -1,11 +1,12 @@
 = render 'search/form'
 
-.questions
-  - @questions.each do |question|
-    div id="question-#{question.id}"
-      p = "rating: #{question .rating}"
-      h2 = link_to question.title, question_path(question)
-      p = question.body
+- cache collection_cache_key_for :question do
+  .questions
+    - @questions.each do |question|
+      div id="question-#{question.id}"
+        p = "rating: #{question .rating}"
+        h2 = link_to question.title, question_path(question)
+        p = question.body
 
 - if can? :create, Question    
   p = link_to 'Ask question', new_question_path
